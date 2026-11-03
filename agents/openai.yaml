@@ -1,0 +1,4 @@
+interface:
+  display_name: "3C 数码拆解实验室"
+  short_description: "输入手机、电脑等数码产品，一键生成可旋转、分层拆解并查看零件的精细三维网页"
+  default_prompt: "使用 $wj-3c-exploded-explorer，把一台手机制作成精细的 3D 爆炸拆解交互网页。"

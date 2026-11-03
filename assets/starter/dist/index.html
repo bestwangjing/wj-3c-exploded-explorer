@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1114">
+  <meta name="description" content="向阳 AI OPC · 数码产品交互拆解实验室。探索光学、影像、计算与机械结构的每一层。">
+  <title>EXPLODED — 向阳拆解实验室</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%23183127'/%3E%3Cpath d='m16 6 10 6v10l-10 5L6 22V12Zm0 0v21M6 12l10 5 10-5' fill='none' stroke='%2398efc6'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+<svg class="icons" xmlns="http://www.w3.org/2000/svg"><defs>
+<symbol id="i-cube" viewBox="0 0 24 24"><path d="m12 3 9 5v8l-9 5-9-5V8Zm0 0v18M3 8l9 5 9-5"/></symbol>
+<symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+<symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></symbol>
+<symbol id="i-reset" viewBox="0 0 24 24"><path d="M3 10a9 9 0 1 1 2 8M3 3v7h7"/></symbol>
+<symbol id="i-expand" viewBox="0 0 24 24"><path d="M3 9V3h6m6 0h6v6M3 15v6h6m12-6v6h-6"/></symbol>
+<symbol id="i-grid" viewBox="0 0 24 24"><path d="M3 3h18v18H3ZM3 9h18M3 15h18M9 3v18m6-18v18"/></symbol>
+<symbol id="i-camera" viewBox="0 0 24 24"><path d="M3 6h5l2-3h4l2 3h5v14H3Z"/><circle cx="12" cy="13" r="4"/></symbol>
+<symbol id="i-focus" viewBox="0 0 24 24"><path d="M3 8V3h5m8 0h5v5M3 16v5h5m8 0h5v-5"/><circle cx="12" cy="12" r="4"/></symbol>
+<symbol id="i-layers" viewBox="0 0 24 24"><path d="m12 2 10 6-10 6L2 8Zm-10 10 10 6 10-6M2 17l10 6 10-6"/></symbol>
+</defs></svg>
+<header class="header">
+  <a class="brand" href="./" aria-label="拆解实验室首页"><span class="brand-mark"><svg><use href="#i-cube"/></svg></span><span>EXPLODED<span class="brand-sub">向阳 · 拆解实验室</span></span></a>
+  <nav aria-label="工作区"><span class="nav-active">结构探索 <span>01</span></span><button id="aboutBtn">设计说明 <span>↗</span></button></nav>
+  <div class="header-right"><span class="live-dot"></span><span>实时 3D</span><span class="header-line"></span><span class="mono">CONCEPT / CONCEPT</span><button class="icon-btn" id="fullscreenBtn" title="进入全屏" aria-label="进入全屏"><svg><use href="#i-expand"/></svg></button></div>
+</header>
+<main class="workspace">
+  <aside class="parts-panel">
+    <div class="panel-head"><span class="eyebrow">COMPONENT LIBRARY</span><div class="title-row"><h2>零件目录</h2><span id="partCount" class="count">—</span></div></div>
+    <label class="search"><svg><use href="#i-search"/></svg><input id="search" type="search" placeholder="搜索零件 / 编号" aria-label="搜索零件"><kbd>/</kbd></label>
+    <div class="library-tools"><span id="visibleCount">全部可见</span><button id="showAll">显示全部</button></div>
+    <div id="partsTree" class="parts-tree" aria-label="零件目录"></div>
+    <div class="library-footer"><span class="live-dot"></span><span>独立零件 · 点击探索</span><button id="collapseAll" title="收起所有分类">收起 ↑</button></div>
+  </aside>
+  <section id="stage" class="stage" aria-label="数码产品三维交互视图">
+    <div id="canvasHost"></div>
+    <div class="stage-heading"><div class="eyebrow"><span class="mint">EXPLORE THE INSIDE</span><span class="short-line"></span>001</div><h1>精密，层层可见<span>。</span></h1><p>CONCEPT 数码产品 <span>/</span> 交互结构研究</p></div>
+    <div class="stage-meta"><span class="status-chip"><span class="live-dot"></span><span id="modeLabel">精细拆解</span></span><span class="mono" id="meshStat">INITIALIZING</span></div>
+    <div id="loading" class="loading"><div class="loader-cube"></div><p>正在构建精密结构</p><span>OPTICS · ELECTRONICS · MECHANICS</span></div>
+    <div id="labels" class="labels"></div><div id="hoverTip" class="hover-tip" hidden></div>
+    <div class="view-tools" role="toolbar" aria-label="视图工具">
+      <button id="homeBtn" class="icon-btn" title="重置视角 · R" aria-label="重置视角"><svg><use href="#i-reset"/></svg></button>
+      <button id="labelsBtn" class="icon-btn active" title="模块标签 · L" aria-label="切换模块标签" aria-pressed="true"><span class="text-icon">Aa</span></button>
+      <button id="xrayBtn" class="icon-btn" title="透视外壳 · X" aria-label="切换透视外壳" aria-pressed="false"><svg><use href="#i-eye"/></svg></button>
+      <button id="gridBtn" class="icon-btn active" title="参考网格 · G" aria-label="切换参考网格" aria-pressed="true"><svg><use href="#i-grid"/></svg></button>
+      <span class="tool-divider"></span><button id="captureBtn" class="icon-btn" title="导出当前 3D 视图" aria-label="导出当前 3D 视图"><svg><use href="#i-camera"/></svg></button>
+    </div>
+    <div class="axis-legend"><span class="axis-y">Y</span><span class="axis-z">Z</span><span class="axis-x">X</span><svg viewBox="0 0 70 70"><path d="M35 35V8M35 35 10 50M35 35 61 50"/><circle cx="35" cy="35" r="3"/></svg></div>
+    <div class="interaction-hint"><span>左键旋转</span><i>·</i><span>滚轮缩放</span><i>·</i><span>右键平移</span></div>
+    <div class="control-dock">
+      <div class="dock-top"><div class="mode-switch" aria-label="拆解程度"><button data-explode="0">完整组装</button><button data-explode="48">模块拆解</button><button data-explode="100" class="active">精细拆解</button></div><button id="playBtn" class="play-btn" aria-pressed="false"><span id="playIcon">▶</span><span id="playText">自动演示</span></button></div>
+      <div class="slider-row"><svg><use href="#i-layers"/></svg><span>展开程度</span><input id="explode" type="range" min="0" max="100" step="1" value="78" aria-label="展开程度"><output id="explodeValue">78<span>%</span></output></div>
+      <div class="dock-bottom"><div class="view-switch"><button data-view="perspective" class="active">透视</button><button data-view="front">正面</button><button data-view="back">背面</button><button data-view="top">俯视</button></div><button id="rotateBtn" aria-pressed="false"><span>↻</span> 自动旋转</button></div>
+    </div>
+  </section>
+  <aside class="inspector">
+    <div class="panel-head"><span class="eyebrow">COMPONENT INSPECTOR</span><div class="title-row"><h2>结构档案</h2><span class="small-label" id="inspectorType">总览</span></div></div>
+    <div class="inspector-content" id="inspectorContent"></div>
+    <div class="inspector-bottom"><span class="tiny-square"></span><p>概念结构可视化<br><span>非厂商 CAD · 非维修指导</span></p><span class="mono">CONCEPT</span></div>
+  </aside>
+</main>
+<footer class="footer"><span><span class="mint">向阳 AI OPC</span><span class="footer-sep">/</span>让复杂结构，看得见。</span><span class="footer-middle"><span class="live-dot"></span><span id="renderStatus">正在初始化</span></span><button id="helpBtn">操作指南 <kbd>?</kbd></button></footer>
+<div id="toast" class="toast" role="status"></div>
+<dialog id="infoDialog"><button id="closeDialog" class="dialog-close" aria-label="关闭说明">×</button><span class="eyebrow mint">ABOUT THIS EXPLORATION</span><h2>从外观，到每一颗元件。</h2><p>这是一台概念数码产品的交互结构模型。使用程序化几何构建与所选产品匹配的机械、电子与交互结构。</p><p>零件数量来自当前模型。形状、布局和材料为演示设计，不代表任何品牌的真实拆机数据，也不能用作维修或制造图纸。</p><div class="help-grid"><div><kbd>拖动</kbd> 旋转视角</div><div><kbd>滚轮</kbd> 缩放视图</div><div><kbd>右键</kbd> 平移模型</div><div><kbd>点击</kbd> 查看零件</div><div><kbd>Space</kbd> 自动拆装</div><div><kbd>R</kbd> 重置视角</div><div><kbd>X</kbd> 透视外壳</div><div><kbd>L</kbd> 模块标签</div><div><kbd>G</kbd> 参考网格</div><div><kbd>Esc</kbd> 退出选择 / 隔离</div></div><div class="dialog-note">PC 端体验 · 所有依赖随页面提供 · 无需登录即可在本地运行</div></dialog>
+<script type="module" src="./app.js"></script>
+</body></html>

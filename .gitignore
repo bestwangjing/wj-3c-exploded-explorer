@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+node_modules/
+.env
+.env.*
+!.env.example
+.openai/
+work/
+outputs/
+qa-result/
+.DS_Store
+Thumbs.db

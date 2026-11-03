@@ -1,0 +1,1 @@
+{"name":"digital-product-explorer","version":"1.0.0","private":true,"license":"MIT","type":"module","scripts":{"start":"node serve.mjs","check":"node --check dist/app.js && node --check dist/model.js"}}
